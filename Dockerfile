@@ -17,6 +17,12 @@ RUN apk add --update \
     nano \
     fish
 
+RUN pecl install -o -f apcu-5.1.8 apcu_bc-beta \
+    && echo "extension=apcu.so" > /usr/local/etc/php/php.ini \
+    && echo "extension=apc.so" >> /usr/local/etc/php/php.ini \
+    && echo "apc.enabled=1" >> /usr/local/etc/php/php.ini \
+    && echo "apc.enable_cli=1" >> /usr/local/etc/php/php.ini
+
 RUN docker-php-ext-install curl json mbstring opcache zip bz2 mcrypt bcmath pdo_sqlite
 
 RUN curl -sS https://getcomposer.org/installer | php \
@@ -25,10 +31,6 @@ RUN curl -sS https://getcomposer.org/installer | php \
     && echo "memory_limit = 2048M" >> /usr/local/etc/php/php.ini \
     && mkdir -p /root/.config/fish/functions \
     && echo "alias codecept=\"php /var/app/vendor/codeception/codeception/codecept\"" >> /root/.config/fish/functions/codecept.fish
-
-RUN pecl install -o -f apcu-5.1.8 apcu_bc-beta \
-    && echo "extension=apcu.so" > /usr/local/etc/php/conf.d/apcu.ini \
-    && echo "extension=apc.so" >> /usr/local/etc/php/conf.d/apcu.ini
 
 RUN wget https://phar.phpunit.de/phpunit.phar \
     && chmod +x phpunit.phar \
