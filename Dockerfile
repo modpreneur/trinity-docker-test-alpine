@@ -11,6 +11,7 @@ RUN apk add --update \
     git \
     nano \
     gcc \
+    pcre-dev \
     make \
     autoconf \
     libc-dev \
@@ -30,7 +31,8 @@ RUN curl -sS https://getcomposer.org/installer | php \
     && touch /usr/local/etc/php/php.ini \
     && echo "memory_limit = 2048M" >> /usr/local/etc/php/php.ini \
     && mkdir -p /root/.config/fish/functions \
-    && echo "alias codecept=\"php /var/app/vendor/codeception/codeception/codecept\"" >> /root/.config/fish/functions/codecept.fish
+    && echo "alias codecept=\"php /var/app/vendor/codeception/codeception/codecept\"" >> /root/.config/fish/functions/codecept.fish \
+    && echo "alias phpstan=\"php /var/app/vendor/phpstan/phpstan/bin/phpstan\"" >> /root/.config/fish/functions/phpstan.fish
 
 RUN wget https://phar.phpunit.de/phpunit.phar \
     && chmod +x phpunit.phar \
